@@ -27,11 +27,16 @@ function App() {
     })
   }
 
+  function logout() {
+
+  }
+
 
   return (
     <div className="App">
     <button onClick={register}>Register</button>
-    <button onClick={login}>Register</button>
+    <button onClick={login}>Login</button>
+    <button onClick={logout}>Log Out</button>
     </div>
   );
 }
