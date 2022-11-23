@@ -11,9 +11,12 @@ import {
 
 function App() {
   const [user, setUser] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
+
 
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      setLoading(false);
       console.log(user);
       if (user) {
         setUser(user);
@@ -52,7 +55,7 @@ function App() {
     <button onClick={register}>Register</button>
     <button onClick={login}>Login</button>
     <button onClick={logout}>Log Out</button>
-    {user.email}
+    {loading ? 'loading...' : user.email}
     </div>
   );
 }
