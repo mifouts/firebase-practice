@@ -16,7 +16,7 @@ function App() {
 
   function createPost() {
     const post = {
-      title: "land a 400k job",
+      title: "land a 100k job",
       description: "Finish Frontend Simplified",
     };
     addDoc(collection(db, "posts"), post);
