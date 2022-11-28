@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { auth, db } from './firebase/init';
-import { collection, addDoc, getDocs, getDoc, doc, query, where, updateDoc, } from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, doc, query, where, updateDoc, deleteDoc, } from 'firebase/firestore';
 import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,15 +14,21 @@ function App() {
   const [user, setUser] = React.useState({});
   const [loading, setLoading] = React.useState(true);
 
-  function updatePost() {
+  async function updatePost() {
     const hardcodedId = 'e8EQA6HvyZtEk69Vg7B0';
     const postRef = doc(db, 'posts', hardcodedId);
+    const post = await getPostById(hardcodedId);
     const newPost = {
-      description: "Finish Frontend Simplified",
-      uid: '1',
-      title: 'Land a 300k job'
+      ...post,
+      title: 'Land a 400k job'
     };
     updateDoc(postRef, newPost);
+  }
+
+  function deletePost() {
+    const hardcodedId = 'e8EQA6HvyZtEk69Vg7B0';
+    const postRef = doc(db, 'posts', hardcodedId);
+    deleteDoc(postRef)
   }
 
   function createPost() {
@@ -40,12 +46,10 @@ function App() {
     console.log(posts);
   }
 
-  async function getPostById() {
-      const hardcodedId = 'e8EQA6HvyZtEk69Vg7B0';
-      const postRef = doc(db, 'posts', hardcodedId);
+  async function getPostById(id) {
+      const postRef = doc(db, 'posts', id);
       const postSnap = await getDoc(postRef);
-      const post = postSnap.data();
-      console.log(post);
+      return postSnap.data();
   }
 
   async function getPostbyUid() {
@@ -105,6 +109,7 @@ function App() {
     <button onClick={getPostById}>Get Post By ID</button>
     <button onClick={getPostbyUid}>Get Post By Uid</button>
     <button onClick={updatePost}>Update Post</button>
+    <button onClick={deletePost}>Delete Post</button>
     </div>
   );
 }
