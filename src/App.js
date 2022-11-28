@@ -43,7 +43,7 @@ function App() {
       where('uid', '==', user.uid)
     );
     const { docs } = await getDocs(postCollectionRef);
-    console.log(docs);
+    console.log(docs.map(doc => doc.data()));
   }
 
 
