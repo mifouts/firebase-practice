@@ -37,6 +37,15 @@ function App() {
       console.log(post);
   }
 
+  async function getPostbyUid() {
+      const postCollectionRef = await query(
+      collection(db, 'posts'),
+      where('uid', '==', user.uid)
+    );
+    const { docs } = await getDocs(postCollectionRef);
+    console.log(docs);
+  }
+
 
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
